@@ -8,7 +8,7 @@ from models.user import User
 from routers.listings import router as listing_router
 from routers.bookings import router as booking_router
 from routers.host import router as host_router
-from seed import seed_database
+
 
 app = FastAPI()
 
@@ -21,7 +21,8 @@ app.add_middleware(
 )
 
 Base.metadata.create_all(bind=engine)
-seed_database()
+from seed import seed_listings
+seed_listings()
 
 app.include_router(listing_router)
 app.include_router(booking_router)

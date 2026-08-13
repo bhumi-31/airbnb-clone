@@ -137,17 +137,18 @@ new_listings = [
 ]
 
 
-db = SessionLocal()
+def seed_listings():
+    db = SessionLocal()
 
-try:
-    existing_count = db.query(Listing).count()
+    try:
+        existing_count = db.query(Listing).count()
 
-    if existing_count == 0:
-        db.add_all(new_listings)
-        db.commit()
-        print("12 listings added successfully")
-    else:
-        print(f"Listings already exist: {existing_count}")
+        if existing_count == 0:
+            db.add_all(new_listings)
+            db.commit()
+            print("12 listings added successfully")
+        else:
+            print(f"Listings already exist: {existing_count}")
 
-finally:
-    db.close()
+    finally:
+        db.close()
