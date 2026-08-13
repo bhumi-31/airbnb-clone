@@ -1,5 +1,6 @@
 from database import SessionLocal
 from models.listing import Listing
+from models.user import User
 
 
 new_listings = [
@@ -141,12 +142,34 @@ def seed_listings():
     db = SessionLocal()
 
     try:
+        # Create a seed host if one doesn't already exist
+        host = db.query(User).filter(User.name == "Demo Host").first()
+
+        if not host:
+            host = User(
+                name="Demo Host",
+                role="host"
+            )
+            db.add(host)
+            db.commit()
+            db.refresh(host)
+
+            print(f"Created seed host with ID: {host.id}")
+
+        # Check if listings already exist
         existing_count = db.query(Listing).count()
 
         if existing_count == 0:
+
+            # Assign the host to all listings
+            for listing in new_listings:
+                listing.host_id = host.id
+
             db.add_all(new_listings)
             db.commit()
+
             print("12 listings added successfully")
+
         else:
             print(f"Listings already exist: {existing_count}")
 
