@@ -1,120 +1,122 @@
-🏠 Airbnb Clone
+# Airbnb Clone
 
-A full-stack Airbnb-inspired web application for discovering stays, searching and filtering listings, making bookings, managing favorites, and handling host listings and reservations.
+A full-stack Airbnb-inspired web application built with **Next.js** and **FastAPI**. The application allows guests to explore and search property listings, view property details, make bookings, manage trips and favorites, while hosts can create and manage listings and view reservations.
 
-🌐 Live Demo
+## Live Demo
 
-Frontend: https://airbnb-clone-amber-three.vercel.app/
+- **Frontend:** https://airbnb-clone-amber-three.vercel.app/
+- **Backend API:** https://airbnb-clone-ul2z.onrender.com/
 
-Backend API: https://airbnb-clone-ul2z.onrender.com/
+> The backend is deployed on Render's free tier, so the first request may take a few seconds if the service has been inactive.
 
-The backend is hosted on Render's free tier, so the first request may take a few seconds after inactivity.
+---
 
-✨ Features
+## Features
 
-Guest
+### Guest Features
 
-Browse property listings
+- Browse all available listings
+- Search listings by location
+- Filter listings by property type
+- Filter listings by number of guests
+- Select check-in and check-out dates
+- View detailed property information
+- View price breakdown
+- Make a booking
+- View booked trips
+- Add and remove favorite listings
+- Pagination for listings
+- Toast notifications for actions and errors
 
-Search by location
+### Host Features
 
-Filter by property type
+- View hosted listings
+- Create a new listing
+- Edit an existing listing
+- Delete a listing
+- View reservations
+- Separate host navigation for listings and reservations
+- Confirmation dialog before deleting a listing
 
-Filter by number of guests
+### Backend Features
 
-Select check-in and check-out dates
+- RESTful API using FastAPI
+- SQLAlchemy ORM
+- SQLite database
+- Pydantic request validation
+- Listing search and filtering
+- Pagination
+- Booking management
+- Host listing management
+- Database relationships
+- Database seeding
+- CORS configuration
 
-View listing details
+---
 
-Make bookings
+## Tech Stack
 
-View trips
+### Frontend
 
-Manage favorite listings
+- Next.js 16
+- React
+- TypeScript
+- Tailwind CSS
+- Next.js App Router
 
-Host
+### Backend
 
-Create listings
+- Python
+- FastAPI
+- SQLAlchemy
+- Pydantic
+- Uvicorn
 
-Edit listings
+### Database
 
-View hosted properties
+- SQLite
 
-View reservations
+### Deployment
 
-Backend
+- Vercel - Frontend
+- Render - Backend
+- GitHub - Source Code
 
-RESTful APIs with FastAPI
+---
 
-SQLAlchemy ORM
+## Architecture
 
-SQLite database
+```text
+                    ┌─────────────────────────┐
+                    │       Next.js           │
+                    │       Frontend          │
+                    │        Vercel           │
+                    └────────────┬────────────┘
+                                 │
+                                 │ REST API
+                                 │ HTTP Requests
+                                 ▼
+                    ┌─────────────────────────┐
+                    │        FastAPI          │
+                    │        Backend          │
+                    │         Render          │
+                    └────────────┬────────────┘
+                                 │
+                                 │ SQLAlchemy
+                                 ▼
+                    ┌─────────────────────────┐
+                    │         SQLite          │
+                    │        Database         │
+                    └─────────────────────────┘
+```
 
-Pydantic validation
+The frontend communicates with the backend through REST APIs. FastAPI handles application logic and database operations using SQLAlchemy.
 
-CORS configuration
+---
 
-Database seeding with sample listings
+## Project Structure
 
-Search and pagination support
-
-🛠️ Tech Stack
-
-Layer
-
-Technologies
-
-Frontend
-
-Next.js, React, TypeScript, Tailwind CSS
-
-Backend
-
-Python, FastAPI, SQLAlchemy, Pydantic
-
-Database
-
-SQLite
-
-API Server
-
-Uvicorn
-
-Deployment
-
-Vercel + Render
-
-Version Control
-
-Git + GitHub
-
-🏗️ Architecture
-
-┌──────────────────────────────┐
-│          Next.js             │
-│          Frontend            │
-│           Vercel             │
-└──────────────┬───────────────┘
-               │
-               │ REST API / HTTP
-               ▼
-┌──────────────────────────────┐
-│          FastAPI             │
-│          Backend             │
-│           Render             │
-└──────────────┬───────────────┘
-               │
-               │ SQLAlchemy ORM
-               ▼
-┌──────────────────────────────┐
-│           SQLite             │
-│          Database             │
-└──────────────────────────────┘
-
-The Next.js frontend communicates with the FastAPI backend through REST APIs. FastAPI handles business logic and database operations through SQLAlchemy.
-
-📁 Project Structure
-
+```text
 airbnb-clone/
 │
 ├── frontend/
@@ -122,9 +124,13 @@ airbnb-clone/
 │   │   ├── checkout/
 │   │   ├── favorites/
 │   │   ├── host/
-│   │   ├── listings/
+│   │   │   ├── create/
+│   │   │   ├── edit/[id]/
+│   │   │   └── reservations/
+│   │   ├── listings/[id]/
 │   │   ├── trips/
 │   │   └── page.tsx
+│   │
 │   ├── components/
 │   ├── lib/
 │   ├── types/
@@ -137,11 +143,13 @@ airbnb-clone/
 │   │   ├── user.py
 │   │   ├── listing.py
 │   │   └── booking.py
+│   │
 │   ├── schemas/
 │   ├── routers/
 │   │   ├── listings.py
 │   │   ├── bookings.py
 │   │   └── host.py
+│   │
 │   ├── database.py
 │   ├── main.py
 │   ├── seed.py
@@ -149,373 +157,527 @@ airbnb-clone/
 │   └── airbnb.db
 │
 └── README.md
+```
 
-🗄️ Database Schema
+---
 
+## Database Schema
+
+The application uses three main entities:
+
+### User
+
+Stores users and hosts.
+
+```text
+users
+├── id        INTEGER PRIMARY KEY
+├── name      STRING
+└── role      STRING
+```
+
+### Listing
+
+Stores property information.
+
+```text
+listings
+├── id
+├── title
+├── description
+├── location
+├── price_per_night
+├── property_type
+├── max_guests
+├── rating
+├── image_url
+├── amenities
+└── host_id → users.id
+```
+
+### Booking
+
+Stores booking information for a property.
+
+```text
+bookings
+├── id
+├── listing_id
+├── check_in
+├── check_out
+└── guests
+```
+
+### Relationships
+
+```text
 User
+ │
+ │ 1
+ │
+ ├──────────< Listing
+ │
+ │
+ └──────────< Booking
+                    │
+                    │
+                    ▼
+                  Listing
+```
 
-Field
+A host can own multiple listings, and listings can have multiple bookings.
 
-Type
+---
 
-Description
+## API Overview
 
-id
+The backend exposes REST APIs using FastAPI.
 
-Integer
+### Listings
 
-Primary key
+#### Get Listings
 
-name
-
-String
-
-User name
-
-role
-
-String
-
-User role
-
-Listing
-
-Field
-
-Type
-
-Description
-
-id
-
-Integer
-
-Primary key
-
-title
-
-String
-
-Property title
-
-description
-
-Text
-
-Property description
-
-location
-
-String
-
-Property location
-
-price_per_night
-
-Float
-
-Price per night
-
-property_type
-
-String
-
-Villa, House, Apartment, etc.
-
-max_guests
-
-Integer
-
-Maximum guests
-
-rating
-
-Float
-
-Property rating
-
-image_url
-
-String
-
-Property image
-
-amenities
-
-String
-
-Property amenities
-
-host_id
-
-Integer
-
-Foreign key to User
-
-Booking
-
-Bookings connect users and listings and contain booking information such as check-in date, check-out date, and number of guests.
-
-User ───────< Booking >─────── Listing
-  │                              │
-  └──────────────<───────────────┘
-
-A host can have multiple listings, and listings can have multiple bookings.
-
-🔌 API Overview
-
-Listings
-
-Get Listings
-
+```http
 GET /api/listings/
+```
 
-Supports query parameters such as:
+Supports search and pagination parameters:
 
-GET /api/listings/?location=Goa&guests=4&page=1&limit=6
-
-Parameters:
-
-Parameter
-
-Description
-
+```text
 location
-
-Search by location
-
 guests
-
-Filter by guest capacity
-
 check_in
-
-Check-in date
-
 check_out
-
-Check-out date
-
 page
-
-Page number
-
 limit
+```
 
-Number of results per page
+Example:
 
-Get Listing
+```http
+GET /api/listings/?location=Goa&guests=4&page=1&limit=6
+```
 
+#### Get Listing Details
+
+```http
 GET /api/listings/{listing_id}
+```
 
-Bookings
+---
 
-Create Booking
+### Bookings
 
+#### Create Booking
+
+```http
 POST /api/bookings/
+```
 
 Example request:
 
+```json
 {
   "listing_id": 1,
   "check_in": "2026-08-20",
   "check_out": "2026-08-23",
   "guests": 2
 }
+```
 
-Host
+The API validates the dates, guest count, and listing before creating the booking.
 
-Host APIs provide operations for:
+---
 
-Creating listings
+### Host
 
-Updating listings
+Host APIs are used for:
 
-Managing hosted properties
+- Retrieving host listings
+- Creating listings
+- Updating listings
+- Deleting listings
+- Retrieving host reservations
 
-Viewing reservations
+---
 
-Interactive API documentation is available through FastAPI Swagger UI.
+## Application Routes
 
-⚙️ Local Setup
+| Route | Description |
+|---|---|
+| `/` | Explore all listings |
+| `/listings/[id]` | Listing details |
+| `/checkout` | Booking checkout |
+| `/favorites` | Favorite listings |
+| `/trips` | User trips |
+| `/host` | Host dashboard |
+| `/host/create` | Create listing |
+| `/host/edit/[id]` | Edit listing |
+| `/host/reservations` | Host reservations |
 
-1. Clone the repository
+---
 
+# Local Development
+
+## Prerequisites
+
+Make sure you have installed:
+
+- Node.js
+- npm
+- Python 3
+- Git
+
+---
+
+## 1. Clone the Repository
+
+```bash
 git clone https://github.com/bhumi-31/airbnb-clone.git
 cd airbnb-clone
+```
 
-2. Backend
+---
 
+# Backend Setup
+
+Navigate to the backend:
+
+```bash
 cd backend
+```
+
+### Create Virtual Environment
+
+```bash
 python -m venv venv
+```
+
+### Activate Virtual Environment
+
+macOS / Linux:
+
+```bash
 source venv/bin/activate
+```
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
 pip install -r requirements.txt
+```
 
-Start the backend:
+### Start Backend
 
+```bash
 python -m uvicorn main:app --reload
+```
 
-Backend:
+Backend will run at:
 
+```text
 http://127.0.0.1:8000
+```
 
-Swagger UI:
+FastAPI Swagger documentation:
 
+```text
 http://127.0.0.1:8000/docs
+```
 
-3. Seed the database
+---
 
+## Database Seeding
+
+The project includes a seed script containing sample property listings.
+
+Run:
+
+```bash
 python seed.py
+```
 
-The seed script creates the required host and sample property listings.
+The seed process creates the required host and adds the sample listings to the database.
 
-4. Frontend
+---
 
-Open another terminal:
+# Frontend Setup
 
+Open a new terminal and navigate to:
+
+```bash
 cd frontend
+```
+
+### Install Dependencies
+
+```bash
 npm install
+```
 
-Create .env.local:
+### Environment Variables
 
+Create a file:
+
+```text
+.env.local
+```
+
+Add:
+
+```env
 NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+```
 
-Start the frontend:
+### Start Development Server
 
+```bash
 npm run dev
+```
 
-Frontend:
+Frontend will run at:
 
+```text
 http://localhost:3000
+```
 
-🏭 Production Build
+---
 
-To verify the Next.js production build:
+# Production Build
 
+Before deployment, verify the frontend production build:
+
+```bash
 npm run build
+```
 
-Run the production frontend:
+Start the production server:
 
+```bash
 npm start
+```
 
-☁️ Deployment
+---
 
-Frontend — Vercel
+# Deployment
 
-The frontend is deployed on Vercel.
+## Frontend - Vercel
+
+The Next.js frontend is deployed on Vercel.
 
 Production environment variable:
 
+```env
 NEXT_PUBLIC_API_URL=https://airbnb-clone-ul2z.onrender.com
+```
 
-Backend — Render
+After changing environment variables, the Vercel project should be redeployed.
+
+## Backend - Render
 
 The FastAPI backend is deployed on Render.
 
-Start command:
+### Root Directory
 
+```text
+backend
+```
+
+### Build Command
+
+```bash
+pip install -r requirements.txt
+```
+
+### Start Command
+
+```bash
 python -m uvicorn main:app --host 0.0.0.0 --port $PORT
+```
 
-📱 Application Routes
+---
 
-Route
+## Search and Pagination
 
-Purpose
+The listings API supports query parameters for searching and pagination.
 
-/
+Example:
 
-Explore stays
+```http
+GET /api/listings/?location=Rishikesh&guests=4&page=1&limit=6
+```
 
-/listings/[id]
+### Query Parameters
 
-Listing details
+| Parameter | Description |
+|---|---|
+| `location` | Search listings by location |
+| `guests` | Filter by guest capacity |
+| `check_in` | Check-in date |
+| `check_out` | Check-out date |
+| `page` | Page number |
+| `limit` | Number of listings per page |
 
-/checkout
+The frontend uses Previous and Next controls to navigate through listing pages.
 
-Booking checkout
+---
 
-/favorites
+## Booking Flow
 
-Favorite listings
+```text
+Select Listing
+      ↓
+Select Check-in Date
+      ↓
+Select Check-out Date
+      ↓
+Select Number of Guests
+      ↓
+Calculate Price
+      ↓
+Reserve
+      ↓
+Backend Validates Booking
+      ↓
+Booking Created
+      ↓
+View Trip
+```
 
-/trips
+---
 
-User trips
+## Host Flow
 
-/host
+```text
+Host Dashboard
+      │
+      ├── Your Listings
+      │       │
+      │       ├── Create Listing
+      │       ├── Edit Listing
+      │       └── Delete Listing
+      │
+      └── Reservations
+              │
+              └── View Guest Bookings
+```
 
-Host dashboard
+---
 
-/host/create
+## Mocked / Placeholder Features
 
-Create listing
+The following features are intentionally simplified or mocked according to the project requirements:
 
-/host/edit/[id]
+- Real payment processing
+- Guest-host messaging
+- Real-time map with live pricing
+- Identity verification
+- Full user authentication
 
-Edit listing
+The booking flow currently creates a booking through the backend without integrating a real payment gateway.
 
-/host/reservations
+---
 
-Host reservations
+## Optional Features
 
-🎯 Learning Outcomes
+The project can be extended with:
 
-This project provided hands-on experience with:
+- Interactive map with listing pins
+- Reviews after completed stays
+- Superhost badges
+- Image upload to cloud storage
+- Dark mode
+- Advanced authentication
+- PostgreSQL database
+- Real payment integration
 
-Full-stack web development
+---
 
-Next.js App Router
+## Testing
 
-React and TypeScript
+The backend API can be tested using:
 
-REST API design
+- FastAPI Swagger UI
+- Postman
+- Frontend application
 
-FastAPI
+Swagger:
 
-SQLAlchemy ORM
+```text
+http://127.0.0.1:8000/docs
+```
 
-Relational database design
+Production backend:
 
-Search and pagination
+```text
+https://airbnb-clone-ul2z.onrender.com
+```
 
-Frontend-backend integration
+---
 
-Environment variables
+## Environment Variables
 
-Production deployment
+### Frontend
 
-Vercel and Render
+Local:
 
-🚀 Future Improvements
+```env
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+```
 
-JWT-based authentication
+Production:
 
-PostgreSQL production database
+```env
+NEXT_PUBLIC_API_URL=https://airbnb-clone-ul2z.onrender.com
+```
 
-Payment integration
+`.env.local` should not be committed to GitHub.
 
-Reviews and ratings
+---
 
-Advanced filters
+## Deliverables
 
-Map-based search
+### Source Code
 
-Image upload
+Public GitHub repository containing:
 
-Improved availability management
+```text
+frontend/
+backend/
+README.md
+```
 
-Email notifications
+### Documentation
 
-👩‍💻 Author
+This README includes:
 
-Bhumika Narula
+- Setup instructions
+- Project structure
+- Architecture overview
+- Database schema
+- API overview
+- Deployment instructions
 
-GitHub: https://github.com/bhumi-31
+### Demo
 
-📦 Deliverables
+**Live Application:**
 
-Source Code: Public GitHub repository containing frontend/ and backend/
+https://airbnb-clone-amber-three.vercel.app/
 
-Documentation: This README contains setup instructions, architecture overview, database schema, and API overview
+**Backend API:**
 
-Demo: Hosted frontend and backend links provided above
+https://airbnb-clone-ul2z.onrender.com/
+
+---
+
+## Author
+
+**Bhumika Narula**
+
+GitHub: https://github.com/bhumi-31/airbnb-clone
