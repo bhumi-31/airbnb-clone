@@ -1,7 +1,9 @@
+import os
 from sqlalchemy import  create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
 DATABASE_URL = "sqlite:///./airbnb.db"
+print("DATABASE PATH:", os.path.abspath("airbnb.db"))
 
 engine = create_engine(
     DATABASE_URL,

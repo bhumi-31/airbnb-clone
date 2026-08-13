@@ -1,75 +1,87 @@
 from database import SessionLocal
 from models.listing import Listing
 
-listings = [
+
+new_listings = [
     Listing(
-        title="Luxury Beach Villa",
-        description="Beautiful beachfront villa with a private pool and stunning ocean views.",
-        location="Goa, India",
-        price_per_night=6500,
-        property_type="Villa",
-        max_guests=6,
-        rating=4.8,
-        image_url="https://images.unsplash.com/photo-1564501049412-61c2a3083791"
-    ),
-    
-    Listing(
-        title="Cozy Mountain Cabin",
-        description="Peaceful wooden cabin surrounded by mountains and nature.",
-        location="Manali, India",
-        price_per_night=4500,
+        title="Desert Camp",
+        description="Unique desert stay with beautiful sunset views and traditional interiors.",
+        location="Jaisalmer, India",
+        price_per_night=3500,
         property_type="Cabin",
         max_guests=4,
-        rating=4.9,
+        rating=4.7,
+        image_url="https://images.unsplash.com/photo-1548013146-72479768bada"
+    ),
+
+    Listing(
+        title="Forest Cottage",
+        description="Quiet cottage surrounded by lush greenery and peaceful nature.",
+        location="Rishikesh, India",
+        price_per_night=4000,
+        property_type="Cottage",
+        max_guests=4,
+        rating=4.8,
         image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8"
     ),
+
     Listing(
-        title="Modern City Apartment",
-        description="Modern apartment located in the heart of Mumbai.",
-        location="Mumbai, India",
-        price_per_night=3800,
+        title="Luxury City Apartment",
+        description="Stylish apartment with modern interiors in a prime city location.",
+        location="Delhi, India",
+        price_per_night=4800,
         property_type="Apartment",
         max_guests=3,
         rating=4.7,
-        image_url="https://images.unsplash.com/photo-1502672023488-70e25813eb80"
+        image_url="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
     ),
+
     Listing(
-        title="Heritage Haveli",
-        description="Traditional heritage home with beautiful architecture.",
-        location="Jaipur, India",
-        price_per_night=5200,
-        property_type="House",
-        max_guests=5,
-        rating=4.9,
-        image_url="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"
-    ),
-    Listing(
-        title="Lake View Retreat",
-        description="Relaxing stay overlooking a beautiful lake.",
-        location="Udaipur, India",
-        price_per_night=5800,
+        title="Hilltop Villa",
+        description="Beautiful hilltop villa offering peaceful surroundings and mountain views.",
+        location="Shimla, India",
+        price_per_night=5600,
         property_type="Villa",
+        max_guests=6,
+        rating=4.9,
+        image_url="https://images.unsplash.com/photo-1510798831971-661eb04b3739"
+    ),
+
+    Listing(
+        title="Riverside Cottage",
+        description="Relaxing cottage beside the river, perfect for a peaceful getaway.",
+        location="Rishikesh, India",
+        price_per_night=3900,
+        property_type="Cottage",
+        max_guests=4,
+        rating=4.6,
+        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8"
+    ),
+
+    Listing(
+        title="Beachside Apartment",
+        description="Modern apartment close to the beach with beautiful coastal views.",
+        location="Goa, India",
+        price_per_night=5000,
+        property_type="Apartment",
         max_guests=4,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
-    ),
-    Listing(
-        title="Kerala Beach House",
-        description="Comfortable beach house perfect for a relaxing getaway.",
-        location="Kerala, India",
-        price_per_night=4200,
-        property_type="House",
-        max_guests=5,
-        rating=4.6,
-        image_url="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2"
+        image_url="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4"
     ),
 ]
+
 
 db = SessionLocal()
 
 try:
-    db.add_all(listings)
-    db.commit()
-    print("Listing seeded successfully")
+    existing_count = db.query(Listing).count()
+
+    if existing_count < 12:
+        db.add_all(new_listings)
+        db.commit()
+        print("6 new listings added successfully")
+    else:
+        print("Listings already seeded")
+
 finally:
     db.close()

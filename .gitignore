@@ -24,3 +24,8 @@ out/
 
 # VS Code
 .vscode/
+
+node_modules
+.next
+.env
+.env.local
