@@ -12,7 +12,8 @@ new_listings = [
         property_type="Cabin",
         max_guests=4,
         rating=4.7,
-        image_url="https://images.unsplash.com/photo-1548013146-72479768bada"
+        image_url="https://images.unsplash.com/photo-1548013146-72479768bada",
+        amenities="WiFi, Parking, Air conditioning, Kitchen"
     ),
 
     Listing(
@@ -23,7 +24,8 @@ new_listings = [
         property_type="Cottage",
         max_guests=4,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8"
+        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8",
+        amenities="WiFi, Parking, Kitchen, Heating"
     ),
 
     Listing(
@@ -34,7 +36,8 @@ new_listings = [
         property_type="Apartment",
         max_guests=3,
         rating=4.7,
-        image_url="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
+        image_url="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+        amenities="WiFi, Air conditioning, Kitchen, TV"
     ),
 
     Listing(
@@ -45,7 +48,8 @@ new_listings = [
         property_type="Villa",
         max_guests=6,
         rating=4.9,
-        image_url="https://images.unsplash.com/photo-1510798831971-661eb04b3739"
+        image_url="https://images.unsplash.com/photo-1510798831971-661eb04b3739",
+        amenities="WiFi, Mountain view, Parking, Fireplace, Kitchen"
     ),
 
     Listing(
@@ -56,7 +60,8 @@ new_listings = [
         property_type="Cottage",
         max_guests=4,
         rating=4.6,
-        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8"
+        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8",
+        amenities="WiFi, River view, Parking, Kitchen"
     ),
 
     Listing(
@@ -67,7 +72,8 @@ new_listings = [
         property_type="Apartment",
         max_guests=4,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4"
+        image_url="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4",
+        amenities="WiFi, Pool, Air conditioning, Kitchen, Beach access"
     ),
 
     Listing(
@@ -78,7 +84,8 @@ new_listings = [
         property_type="Villa",
         max_guests=6,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d"
+        image_url="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d",
+        amenities="WiFi, Private pool, Beach access, Kitchen, Air conditioning"
     ),
 
     Listing(
@@ -89,7 +96,8 @@ new_listings = [
         property_type="Cabin",
         max_guests=4,
         rating=4.9,
-        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8"
+        image_url="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8",
+        amenities="WiFi, Mountain view, Fireplace, Parking, Heating"
     ),
 
     Listing(
@@ -100,7 +108,8 @@ new_listings = [
         property_type="Apartment",
         max_guests=3,
         rating=4.7,
-        image_url="https://images.unsplash.com/photo-1554995207-c18c203602cb"
+        image_url="https://images.unsplash.com/photo-1554995207-c18c203602cb",
+        amenities="WiFi, Air conditioning, Kitchen, TV, Elevator"
     ),
 
     Listing(
@@ -111,7 +120,8 @@ new_listings = [
         property_type="House",
         max_guests=4,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c"
+        image_url="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+        amenities="WiFi, Lake view, Parking, Kitchen, Air conditioning"
     ),
 
     Listing(
@@ -122,7 +132,8 @@ new_listings = [
         property_type="House",
         max_guests=4,
         rating=4.8,
-        image_url="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2"
+        image_url="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2",
+        amenities="WiFi, Beach access, Garden, Kitchen, Parking"
     ),
 
     Listing(
@@ -133,7 +144,8 @@ new_listings = [
         property_type="House",
         max_guests=6,
         rating=4.7,
-        image_url="https://images.unsplash.com/photo-1510798831971-661eb04b3739"
+        image_url="https://images.unsplash.com/photo-1510798831971-661eb04b3739",
+        amenities="WiFi, Mountain view, Parking, Fireplace, Kitchen"
     ),
 ]
 
@@ -142,26 +154,28 @@ def seed_listings():
     db = SessionLocal()
 
     try:
-        # Create a seed host if one doesn't already exist
-        host = db.query(User).filter(User.name == "Demo Host").first()
+        # Create a demo host if one doesn't already exist
+        host = db.query(User).filter(
+            User.name == "Demo Host"
+        ).first()
 
         if not host:
             host = User(
                 name="Demo Host",
                 role="host"
             )
+
             db.add(host)
             db.commit()
             db.refresh(host)
 
             print(f"Created seed host with ID: {host.id}")
 
-        # Check if listings already exist
+        # Add listings only if the database is empty
         existing_count = db.query(Listing).count()
 
         if existing_count == 0:
 
-            # Assign the host to all listings
             for listing in new_listings:
                 listing.host_id = host.id
 
@@ -171,7 +185,13 @@ def seed_listings():
             print("12 listings added successfully")
 
         else:
-            print(f"Listings already exist: {existing_count}")
+            print(
+                f"Listings already exist: {existing_count}"
+            )
 
     finally:
         db.close()
+
+
+if __name__ == "__main__":
+    seed_listings()
