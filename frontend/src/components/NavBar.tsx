@@ -9,7 +9,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="border-b border-gray-100 bg-[#fbfbfb]">
+        <header className="relative border-b border-gray-100 bg-[#fbfbfb]">
             <div className="mx-auto flex h-[86px] max-w-[1600px] items-center px-14">
                 <Link href="/">
                     <Image
