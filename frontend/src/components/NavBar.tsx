@@ -9,7 +9,7 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="relative border-b border-gray-100 bg-[#fbfbfb]">
+        <header className="relative bg-white">
             <div className="mx-auto flex h-[86px] max-w-[1600px] items-center px-14">
                 <Link href="/">
                     <Image
@@ -48,14 +48,25 @@ export default function Navbar() {
                 </div>
 
                 {menuOpen && (
-                    <div className="absolute right-14 top-[75px] z-50 w-56 rounded-xl border bg-white py-2 shadow-xl">
-                        <Link href="/host" className="block px-5 py-3 hover:bg-gray-100">
+                    <div className="absolute right-14 top-[75px] z-50 w-64 rounded-2xl border border-gray-100 bg-white p-2 shadow-[0_8px_30px_rgba(0,0,0,0.12)]">
+                        <Link
+                            href="/host"
+                            className="block cursor-pointer rounded-xl px-4 py-3 hover:bg-gray-100"
+                        >
                             Airbnb your home
                         </Link>
-                        <Link href="/trips" className="block px-5 py-3 hover:bg-gray-100">
+
+                        <Link
+                            href="/trips"
+                            className="block cursor-pointer rounded-xl px-4 py-3 hover:bg-gray-100"
+                        >
                             My Trips
                         </Link>
-                        <Link href="/favorites" className="block px-5 py-3 hover:bg-gray-100">
+
+                        <Link
+                            href="/favorites"
+                            className="block cursor-pointer rounded-xl px-4 py-3 hover:bg-gray-100"
+                        >
                             Favorites
                         </Link>
                     </div>
