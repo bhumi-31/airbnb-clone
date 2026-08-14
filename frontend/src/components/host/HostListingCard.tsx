@@ -20,9 +20,7 @@ export default function HostListingCard({ listing, onDelete }: Props) {
             <div className="p-5">
                 <div className="flex justify-between gap-3">
                     <div>
-                        <h2 className="text-lg font-semibold">
-                            {listing.title}
-                        </h2>
+                        <h2 className="text-lg font-semibold">{listing.title}</h2>
                         <p className="mt-1 text-sm text-gray-500">
                             {listing.location}
                         </p>
@@ -48,14 +46,14 @@ export default function HostListingCard({ listing, onDelete }: Props) {
                 <div className="mt-5 flex gap-3">
                     <Link
                         href={`/host/edit/${listing.id}`}
-                        className="flex-1 rounded-lg border px-4 py-2 text-center text-sm font-medium hover:bg-gray-50"
+                        className="flex-1 cursor-pointer rounded-lg border px-4 py-2 text-center text-sm font-medium hover:bg-gray-50"
                     >
                         Edit
                     </Link>
 
                     <button
                         onClick={() => onDelete(listing.id)}
-                        className="flex-1 rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50"
+                        className="flex-1 cursor-pointer rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-500 hover:bg-red-50"
                     >
                         Delete
                     </button>

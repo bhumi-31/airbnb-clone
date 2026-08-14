@@ -165,10 +165,7 @@ export async function getHostBookings(
     return response.json();
 }
 
-// =====================================================
 // MY TRIPS
-
-
 export interface MyTrip {
     id: number;
     listing_id: number;

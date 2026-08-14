@@ -1,7 +1,7 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useToast } from "./ToastProvider";
 import { Listing } from "../types/listing";
 import SearchBar from "./SearchBar";
@@ -21,7 +21,6 @@ export default function ListingExplorer({ initialListings }: Props) {
 
     const params = useSearchParams();
     const category = params.get("category");
-
     const { showToast } = useToast();
 
     useEffect(() => {
@@ -34,9 +33,9 @@ export default function ListingExplorer({ initialListings }: Props) {
     }, [category, initialListings]);
 
     const filtered = listings.filter(
-        (l) =>
+        (listing) =>
             !category ||
-            l.property_type.toLowerCase() === category.toLowerCase()
+            listing.property_type.toLowerCase() === category.toLowerCase()
     );
 
     const handleSearch = async (
@@ -50,8 +49,8 @@ export default function ListingExplorer({ initialListings }: Props) {
             showToast("Check-out date must be after check-in date.", "error");
             return;
         }
-        const p = new URLSearchParams();
 
+        const p = new URLSearchParams();
         if (loc.trim()) p.set("location", loc);
         if (guestCount > 0) p.set("guests", guestCount.toString());
         if (checkin) p.set("check_in", checkin);
@@ -61,7 +60,9 @@ export default function ListingExplorer({ initialListings }: Props) {
         p.set("limit", "6");
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/listings/?${p}`);
+            const res = await fetch(
+                `${process.env.NEXT_PUBLIC_API_URL}/api/listings/?${p}`
+            );
 
             if (!res.ok) throw new Error("Failed to fetch listings");
 
@@ -82,6 +83,7 @@ export default function ListingExplorer({ initialListings }: Props) {
             <SearchBar onSearch={handleSearch} />
 
             <div className="mt-5 border-t border-gray-200" />
+
             <main className="mx-auto max-w-6xl px-6 py-8">
                 <h1 className="mb-8 text-2xl font-semibold">
                     {category ? `${category} stays` : "Explore stays"}
@@ -93,7 +95,10 @@ export default function ListingExplorer({ initialListings }: Props) {
                     <>
                         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-3">
                             {filtered.map((listing) => (
-                                <ListingCard key={listing.id} listing={listing} />
+                                <ListingCard
+                                    key={listing.id}
+                                    listing={listing}
+                                />
                             ))}
                         </div>
 
