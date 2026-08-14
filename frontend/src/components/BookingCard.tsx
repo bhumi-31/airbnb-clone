@@ -110,7 +110,7 @@ export default function BookingCard({
             <button
                 onClick={handleReserve}
                 disabled={!checkIn || !checkOut || nights <= 0}
-                className="mt-5 w-full rounded-xl bg-rose-500 py-3 font-semibold text-white hover:bg-rose-600 disabled:bg-gray-300"
+                className="cursor-pointer mt-5 w-full rounded-xl bg-rose-500 py-3 font-semibold text-white hover:bg-rose-600 disabled:bg-gray-300"
             >
                 Reserve
             </button>
