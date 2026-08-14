@@ -26,7 +26,7 @@ export default function CategoryBar() {
                 <button
                     key={item.name}
                     onClick={() => selectCategory(item.type)}
-                    className={`flex flex-col items-center gap-1 pb-2 text-sm ${
+                    className={`cursor-pointer flex flex-col items-center gap-1 pb-2 text-sm ${
                         category === item.type
                             ? "border-b-2 border-black font-semibold text-black"
                             : "text-gray-500 hover:text-black"

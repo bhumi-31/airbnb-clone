@@ -2,10 +2,8 @@ import { Listing } from "../types/listing";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-// =====================================================
-// PUBLIC LISTINGS
-// =====================================================
 
+// PUBLIC LISTINGS
 export async function getListings(): Promise<Listing[]> {
     const response = await fetch(
         `${API_URL}/api/listings`
@@ -18,10 +16,8 @@ export async function getListings(): Promise<Listing[]> {
     return response.json();
 }
 
-// =====================================================
-// HOST LISTING DATA
-// =====================================================
 
+// HOST LISTING DATA
 export interface HostListingData {
     title: string;
     description: string;
@@ -33,10 +29,8 @@ export interface HostListingData {
     amenities: string;
 }
 
-// =====================================================
-// GET HOST LISTINGS
-// =====================================================
 
+// GET HOST LISTINGS
 export async function getHostListings(
     hostId: number
 ): Promise<Listing[]> {
@@ -57,10 +51,8 @@ export async function getHostListings(
     return response.json();
 }
 
-// =====================================================
-// CREATE LISTING
-// =====================================================
 
+// CREATE LISTING
 export async function createListing(
     hostId: number,
     listing: HostListingData
@@ -88,10 +80,8 @@ export async function createListing(
     return response.json();
 }
 
-// =====================================================
-// UPDATE LISTING
-// =====================================================
 
+// UPDATE LISTING
 export async function updateListing(
     hostId: number,
     listingId: number,
@@ -120,10 +110,8 @@ export async function updateListing(
     return response.json();
 }
 
-// =====================================================
-// DELETE LISTING
-// =====================================================
 
+// DELETE LISTING
 export async function deleteListing(
     hostId: number,
     listingId: number
@@ -144,10 +132,8 @@ export async function deleteListing(
 }
 
 
-// =====================================================
-// HOST BOOKINGS
-// =====================================================
 
+// HOST BOOKINGS
 export interface HostBooking {
     id: number;
     listing_id: number;
@@ -181,7 +167,7 @@ export async function getHostBookings(
 
 // =====================================================
 // MY TRIPS
-// =====================================================
+
 
 export interface MyTrip {
     id: number;

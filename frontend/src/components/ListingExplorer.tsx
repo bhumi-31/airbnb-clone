@@ -110,7 +110,7 @@ export default function ListingExplorer({ initialListings }: Props) {
                                     )
                                 }
                                 disabled={page === 1}
-                                className="rounded-lg border px-5 py-2 disabled:opacity-40"
+                                className="cursor-pointer rounded-lg border px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Previous
                             </button>
@@ -129,7 +129,7 @@ export default function ListingExplorer({ initialListings }: Props) {
                                     )
                                 }
                                 disabled={listings.length < 6}
-                                className="rounded-lg border px-5 py-2 disabled:opacity-40"
+                                className="cursor-pointer rounded-lg border px-5 py-2 disabled:cursor-not-allowed disabled:opacity-40"
                             >
                                 Next
                             </button>
